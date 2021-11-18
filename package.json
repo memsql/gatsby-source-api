@@ -1,0 +1,9 @@
+{
+  "name": "gatsby-source-api",
+  "version": "1.0.0",
+  "description": "A gatsby source plugin that enables fetching JSON data from an external rest API.",
+  "main": "index.js",
+  "scripts": {},
+  "author": "SingleStore Web Team <web@singlestore.com>",
+  "license": "MIT"
+}
