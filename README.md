@@ -31,7 +31,7 @@ yarn add @singlestore/gatsby-source-api gatsby -D
 module.exports = {
     plugins: [
         {
-            resolve: "gatsby-source-api",
+            resolve: "@singlestore/gatsby-source-api",
             options: {
                 name: "http-api",
                 endpoint: "http://httpbin.org/get",
@@ -51,14 +51,14 @@ instance of the plugin must have a unique `name` field.
 module.exports = {
     plugins: [
         {
-            resolve: "gatsby-source-api",
+            resolve: "@singlestore/gatsby-source-api",
             options: {
                 name: "http-api",
                 endpoint: "http://httpbin.org/get",
             },
         },
         {
-            resolve: "gatsby-source-api",
+            resolve: "@singlestore/gatsby-source-api",
             options: {
                 name: "github-repos",
                 endpoint: "https://api.github.com/repos/gatsby",
@@ -86,7 +86,7 @@ const repositoryNames = [
 module.exports = {
     plugins: [
         {
-            resolve: "gatsby-source-api",
+            resolve: "@singlestore/gatsby-source-api",
             options: {
                 name: "github-repos",
                 fetchOptions: {
@@ -116,7 +116,7 @@ const sources = ["blog", "events"];
 module.exports = {
     plugins: [
         {
-            resolve: "gatsby-source-api",
+            resolve: "@singlestore/gatsby-source-api",
             options: {
                 name: "my-custom-api",
                 getRequest: async () => {
@@ -136,7 +136,7 @@ module.exports = {
         //    OR
         // ========
         {
-            resolve: "gatsby-source-api",
+            resolve: "@singlestore/gatsby-source-api",
             options: {
                 name: "my-custom-api",
                 getRequests: async () => {
@@ -183,7 +183,7 @@ const { google } = require("googleapis");
 module.exports = {
     plugins: [
         {
-            resolve: "gatsby-source-api",
+            resolve: "@singlestore/gatsby-source-api",
             options: {
                 name: "sheets",
                 fetch: async () => {
@@ -389,7 +389,7 @@ can be imported as named exports directly from the package itself. For
 example:
 
 ```typescript
-import { RequestOptions as GatsbySourceAPIRequestOptions } from "gatsby-source-api";
+import { RequestOptions as GatsbySourceAPIRequestOptions } from "@singlestore/gatsby-source-api";
 
 const requestOptions: GatsbySourceAPIRequestOptions = {
     name: "my-unique-request-name",
