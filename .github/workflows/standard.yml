@@ -1,0 +1,16 @@
+name: Push Workflow
+on: [push, pull_request]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm run lint
+      - run: npm run lint:types
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm run test:ci
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm run build
