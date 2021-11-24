@@ -13,6 +13,17 @@ the `serialize` or `serializeAll` callback functions (see below for details) to
 transform your data into a valid JSON format so that it can be read by the
 graphql node creator successfully.
 
+## Installation
+
+1. Install the package from npm
+2. Add the plugin to your `gatsby-config.js`
+
+```shell
+npm install @singlestore/gatsby-source-api gatsby -D
+# or
+yarn add @singlestore/gatsby-source-api gatsby -D
+```
+
 ## Usage
 
 ```javascript
@@ -220,6 +231,9 @@ module.exports = {
     version of the name given. The name can optionally be used as a key in
     cases where the returned data is an array of primitives (see `listKey`).
     The name is also used in all logging and tracing outputs.
+  * Note that although using a non-unique `name` will not cause the plugin to
+    break, it will mean the plugin will not be able to use Gatsby's built-in
+    cache thus causing slower builds overall.
 
 * `endpoint <string|URL>`
   * The API endpoint to use to obtain the JSON data.
@@ -368,6 +382,21 @@ type Schema =
 ## Examples
 
 TODO
+
+## Typescript
+The plugin provides its own typescript definition files out of the box. These
+can be imported as named exports directly from the package itself. For
+example:
+
+```typescript
+import { RequestOptions as GatsbySourceAPIRequestOptions } from "gatsby-source-api";
+
+const requestOptions: GatsbySourceAPIRequestOptions = {
+    name: "my-unique-request-name",
+    endpoint: "http://httpbin.org/get",
+};
+```
+
 
 ## Possible Future Features
 
