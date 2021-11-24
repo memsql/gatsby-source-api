@@ -4,12 +4,18 @@
   "description": "Gatsby source plugin that enables fetching JSON data from an external rest API.",
   "main": "src/index.js",
   "scripts": {
-    "babel": "npx babel src --out-dir dist --extensions '.ts' --ignore **/*.spec.ts",
-    "babel:watch": "npm run babel -w",
-    "build": "npm run clean && npm run check-types && npm run babel",
+    "build": "npm run clean && npm run build:types && npm run build:src",
+    "build:src": "npx babel src --out-dir dist --extensions '.ts' --ignore **/*.spec.ts",
+    "build:types": "npx ttsc --emitDeclarationOnly",
     "clean": "npx rimraf dist",
-    "check-types": "npx ttsc",
-    "prepare": "cross-env NODE_ENV=production npm run build"
+    "lint": "npx eslint src",
+    "lint:fix": "npx eslint src --fix",
+    "lint:types": "npx ttsc --noEmit",
+    "prepare": "cross-env NODE_ENV=production npm run clean && npm run build",
+    "test": "npx jest",
+    "test:ci": "npx jest --ci",
+    "test:coverage": "npx jest --collect-coverage",
+    "test:watch": "npx jest --watch"
   },
   "author": "SingleStore Web Team <web@singlestore.com>",
   "license": "MIT",

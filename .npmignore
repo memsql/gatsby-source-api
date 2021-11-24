@@ -4,3 +4,5 @@ coverage
 src/**/*
 
 yarn.lock
+.DS_Store
+.vscode

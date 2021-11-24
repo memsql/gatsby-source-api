@@ -8,12 +8,11 @@ import { PluginContext } from "types/Context";
 import { GraphQLType } from "types/Helpers";
 import { FetchOptions, RequestOptions } from "types/Request";
 
-import { name as PLUGIN_NAME } from "../../package.json";
-
+export const PLUGIN_NAME = "gatsby-source-api";
 export const PRETTY_PLUGIN_NAME: string = chalk.cyan(PLUGIN_NAME);
 
 export const ALT_PREFIX = "alt_";
-export const PRIMITIVES: string[] = ["string", "boolean", "date"];
+export const PRIMITIVES: string[] = ["string", "boolean", "number"];
 
 // https://regex101.com/r/7q1Hgw/1
 export const FIRST_LETTER_REGEX = /^[a-zA-Z]$/i;
@@ -41,7 +40,7 @@ export const getPluginContext = <C = ParentSpanPluginArgs>(
 });
 
 export const isPrimitive = (value: unknown): boolean => {
-    return PRIMITIVES.includes(value as string) || value instanceof Date;
+    return PRIMITIVES.includes(typeof value as string) || value instanceof Date;
 };
 
 export const createExternalNodeId = (

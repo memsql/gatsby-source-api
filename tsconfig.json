@@ -7,7 +7,6 @@
         "baseUrl": "src",
 
         "declaration": true,
-        "emitDeclarationOnly": true,
         "isolatedModules": true,
         "outDir": "dist",
 
@@ -18,7 +17,6 @@
         "removeComments": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "resolveJsonModule": true,
 
         "strict": true,
         "noImplicitAny": true,

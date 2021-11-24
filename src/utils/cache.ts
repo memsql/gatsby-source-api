@@ -1,11 +1,10 @@
 import _ from "lodash";
 
 import { Errors } from "utils/errors";
+import { PLUGIN_NAME } from "utils/helpers";
 
 import { PluginContext } from "types/Context";
 import { RequestsCache } from "types/Request";
-
-import { name as PLUGIN_NAME } from "../../package.json";
 
 export const getCacheKey = (name: string): string => {
     return _.kebabCase(`${PLUGIN_NAME}-${name}`);

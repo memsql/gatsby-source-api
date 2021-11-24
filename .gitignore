@@ -1,8 +1,9 @@
 node_modules
-dist
-yarn.lock
 
+coverage
+dist
 src/**/*.d.ts*
 
+yarn.lock
 .DS_Store
 .vscode
