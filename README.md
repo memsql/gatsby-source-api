@@ -18,10 +18,19 @@ graphql node creator successfully.
 1. Install the package from npm
 2. Add the plugin to your `gatsby-config.js`
 
-```shell
-npm install @singlestore/gatsby-source-api gatsby -D
+```bash
+npm install @singlestore/gatsby-source-api -D
 # or
-yarn add @singlestore/gatsby-source-api gatsby -D
+yarn add @singlestore/gatsby-source-api -D
+```
+
+Note that `@singlestore/gatsby-source-api` also requires `gatsby` as a peer dependency. If you do not
+already have `gatsby` installed, you can do so with the following command:
+
+```bash
+npm install gatsby -D
+# or
+yarn add gatsby -D
 ```
 
 ## Usage
