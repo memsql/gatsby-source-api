@@ -1,5 +1,6 @@
 .github
 coverage
+examples
 src/**/*
 
 .babelrc.js

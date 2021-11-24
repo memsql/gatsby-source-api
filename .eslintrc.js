@@ -43,6 +43,12 @@ module.exports = {
     },
     overrides: [
         {
+            files: ["*.js"],
+            rules: {
+                "@typescript-eslint/no-var-requires": 0,
+            },
+        },
+        {
             files: ["*.spec.ts"],
             rules: {
                 "no-import-assign": 0,
