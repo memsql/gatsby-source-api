@@ -1,8 +1,13 @@
-node_modules
-
+.github
 coverage
 src/**/*
 
+.babelrc.js
+.eslintignore
+.eslintrc.js
+.gitignore
+.prettierrc.json
+tsconfig.json
+
 yarn.lock
-.DS_Store
 .vscode
