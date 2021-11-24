@@ -3,15 +3,12 @@ import { OptionsOfJSONResponseBody } from "got";
 
 import { PluginContext } from "types/Context";
 import { Endpoint } from "types/Helpers";
-import { FetchResponse } from "types/Response";
+import { FetchResponse, SerializedResponse } from "types/Response";
 import { GetSchema, Schema } from "types/Schema";
 
 export type FetchOptions = OptionsOfJSONResponseBody & {
     endpoint: Endpoint;
 };
-
-export type SimpleResponse = Record<string, unknown>;
-export type SerializedResponse = SimpleResponse[] | SimpleResponse;
 
 export type RequestOptions = {
     name: string;
@@ -33,3 +30,5 @@ export type RequestOptions = {
     typePrefix?: string;
     killOnRequestError?: boolean;
 };
+
+export type RequestsCache = RequestOptions[];

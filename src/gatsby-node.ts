@@ -1,5 +1,4 @@
 import _ from "lodash";
-import chalk from "chalk";
 import {
     CreateSchemaCustomizationArgs,
     ParentSpanPluginArgs,
@@ -7,9 +6,10 @@ import {
 } from "gatsby";
 import { isGatsbyNodeLifecycleSupported } from "gatsby-plugin-utils";
 
+import { getRequestsCache, setRequestsCache } from "utils/cache";
 import { createNodes } from "utils/create-nodes";
-import { customFetch, fetchJson, killRequestOnError } from "utils/fetch-json";
-import { filterPredicate } from "utils/helpers";
+import { customFetch, fetchJson, handleRequestError } from "utils/fetch-json";
+import { filterPredicate, getPluginContext } from "utils/helpers";
 import { getRequests } from "utils/requests";
 import { getSerializedResponses, serializeResponse } from "utils/responses";
 
@@ -23,49 +23,31 @@ import {
 } from "types/Response";
 import { GetSchema } from "types/Schema";
 
-const PRETTY_PLUGIN_NAME = chalk.cyan("gatsby-source-api");
-
-type CacheInstance = {
-    instanceName: string;
-    requests: RequestOptions[];
-};
-
-type PluginCache = {
-    [name: string]: CacheInstance;
-};
-
-const PLUGIN_CACHE: PluginCache = {};
-
 export { pluginOptionsSchema } from "utils/plugin-schema";
 
 const handlePluginInit = async (
     gatsbyContext: ParentSpanPluginArgs,
     pluginOptions: PluginOptions
 ): Promise<void> => {
-    const { reporter } = gatsbyContext;
     const { name } = pluginOptions;
 
-    PLUGIN_CACHE[name] = {
-        instanceName: "",
-        requests: [],
-    };
+    const pluginContext: PluginContext = getPluginContext(name, gatsbyContext);
+    const { instance, reporter } = pluginContext;
 
-    const instance: string = chalk.yellow(name);
-    const instanceName = `${PRETTY_PLUGIN_NAME} ${instance}`;
-    PLUGIN_CACHE[name].instanceName = instanceName;
-
-    const pluginContext: PluginContext = {
-        ...gatsbyContext,
-        instance: instanceName,
-    };
-
-    let requests: RequestOptions[] = [];
     try {
-        requests = await getRequests(pluginOptions, pluginContext);
-        PLUGIN_CACHE[name].requests = requests;
+        let requests: RequestOptions[] = await getRequestsCache(
+            name,
+            pluginContext
+        );
+
+        if (!requests?.length) {
+            requests = await getRequests(pluginOptions, pluginContext);
+        }
+
+        await setRequestsCache(name, requests, pluginContext);
     } catch (err) {
         reporter.panic(
-            `${instanceName} An error occurred getting the requests`,
+            `${instance} An error occurred getting request(s)`,
             err as Error
         );
     }
@@ -95,15 +77,19 @@ export const sourceNodes = async (
     gatsbyContext: SourceNodesArgs,
     pluginOptions: PluginOptions
 ): Promise<void> => {
-    const { reporter } = gatsbyContext;
-    const { requests, instanceName } = PLUGIN_CACHE[pluginOptions.name];
+    const { name } = pluginOptions;
 
-    const pluginContext: PluginContext<SourceNodesArgs> = {
-        ...gatsbyContext,
-        instance: instanceName,
-    };
+    const pluginContext: PluginContext<SourceNodesArgs> =
+        getPluginContext<SourceNodesArgs>(name, gatsbyContext);
 
-    const timer = reporter.activityTimer(instanceName);
+    const { instance, reporter } = pluginContext;
+
+    const requests: RequestOptions[] = await getRequestsCache(
+        name,
+        pluginContext
+    );
+
+    const timer = reporter.activityTimer(instance);
     timer.start();
 
     try {
@@ -113,7 +99,7 @@ export const sourceNodes = async (
                     async (
                         request: RequestOptions
                     ): Promise<SerializedResponseContext | void> => {
-                        const { fetch, killOnRequestError } = request;
+                        const { fetch } = request;
 
                         try {
                             let response: FetchResponse | void;
@@ -143,13 +129,11 @@ export const sourceNodes = async (
                                     response,
                                     serialized,
                                 };
-                            } else if (killOnRequestError) {
-                                killRequestOnError(request, pluginContext);
+                            } else {
+                                handleRequestError(request, pluginContext);
                             }
                         } catch (err) {
-                            if (killOnRequestError) {
-                                killRequestOnError(request, pluginContext, err);
-                            }
+                            handleRequestError(request, pluginContext, err);
                         }
                     }
                 )
@@ -173,7 +157,7 @@ export const sourceNodes = async (
         );
     } catch (err) {
         reporter.panic(
-            `${instanceName} An error occurred fetching JSON data.\n`,
+            `${instance} An error occurred fetching JSON data.\n`,
             err as Error
         );
     }
@@ -181,20 +165,24 @@ export const sourceNodes = async (
     timer.end();
 };
 
-export const createSchemaCustomization = (
+export const createSchemaCustomization = async (
     gatsbyContext: CreateSchemaCustomizationArgs,
     pluginOptions: PluginOptions
-): void => {
-    const { actions } = gatsbyContext;
-    const { requests, instanceName } = PLUGIN_CACHE[pluginOptions.name];
+): Promise<void> => {
+    const { name, serializeAll } = pluginOptions;
 
-    const pluginContext: PluginContext<CreateSchemaCustomizationArgs> = {
-        ...gatsbyContext,
-        instance: instanceName,
-    };
+    const pluginContext: PluginContext<CreateSchemaCustomizationArgs> =
+        getPluginContext<CreateSchemaCustomizationArgs>(name, gatsbyContext);
+
+    const { actions } = pluginContext;
+
+    const requests: RequestOptions[] = await getRequestsCache(
+        name,
+        pluginContext
+    );
 
     let _requests: RequestOptions[] = requests;
-    if (pluginOptions.serializeAll) {
+    if (serializeAll) {
         _requests = [pluginOptions];
     }
 

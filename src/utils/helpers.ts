@@ -1,11 +1,16 @@
 import _ from "lodash";
-import { SourceNodesArgs } from "gatsby";
+import chalk from "chalk";
+import { ParentSpanPluginArgs, SourceNodesArgs } from "gatsby";
 
 import { Errors } from "utils/errors";
 
 import { PluginContext } from "types/Context";
 import { GraphQLType } from "types/Helpers";
 import { FetchOptions, RequestOptions } from "types/Request";
+
+import { name as PLUGIN_NAME } from "../../package.json";
+
+export const PRETTY_PLUGIN_NAME: string = chalk.cyan(PLUGIN_NAME);
 
 export const ALT_PREFIX = "alt_";
 export const PRIMITIVES: string[] = ["string", "boolean", "date"];
@@ -22,6 +27,18 @@ export const DISALLOWED_KEYS: string[] = [
     "fields",
     "internal",
 ];
+
+export const getPrettyName = (name: string): string => {
+    return `${PRETTY_PLUGIN_NAME} ${chalk.yellow(name)}`;
+};
+
+export const getPluginContext = <C = ParentSpanPluginArgs>(
+    name: string,
+    context: C
+): PluginContext<C> => ({
+    ...context,
+    instance: getPrettyName(name),
+});
 
 export const isPrimitive = (value: unknown): boolean => {
     return PRIMITIVES.includes(value as string) || value instanceof Date;

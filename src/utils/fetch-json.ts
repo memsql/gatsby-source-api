@@ -43,13 +43,13 @@ export const customFetch = async (
     }
 };
 
-export const killRequestOnError = (
+export const handleRequestError = (
     request: RequestOptions,
     context: PluginContext<SourceNodesArgs>,
     err?: unknown
 ): void => {
     const { reporter, instance } = context;
-    const { name, fetch } = request;
+    const { name, fetch, killOnRequestError } = request;
 
     const requestName = chalk.underline(name);
 
@@ -60,5 +60,8 @@ export const killRequestOnError = (
         errorMessage = errorMessage.concat(" ", `at ${endpoint}`);
     }
 
-    reporter.panic(errorMessage.concat("\n"), err ? (err as Error) : undefined);
+    reporter[killOnRequestError ? "panic" : "warn"](
+        errorMessage.concat("\n"),
+        err ? (err as Error) : undefined
+    );
 };

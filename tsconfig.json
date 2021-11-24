@@ -18,6 +18,7 @@
         "removeComments": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
 
         "strict": true,
         "noImplicitAny": true,
