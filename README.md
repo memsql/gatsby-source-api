@@ -409,6 +409,8 @@ const requestOptions: GatsbySourceAPIRequestOptions = {
 
 ## Possible Future Features
 
+-   Add support for gatsby image plugin
+    - Possibly use system like `entryPoint` for determing where images are in data
 -   Support a login request that can obtain an OAuth token or similar
     - This is currently possible using the `getRequest()` function
 -   Support paginated requests where the user defines a key that should be used as

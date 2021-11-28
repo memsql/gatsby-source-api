@@ -1,0 +1,42 @@
+.card-github-component {
+    display: block;
+    color: #4c4a57;
+    margin: 20px;
+    border: 1px solid #c2c1c7;
+    border-radius: 8px;
+    transition: 0.15s ease-in-out;
+    padding: 2em;
+    box-shadow: 0px 2px 6px rgba(27, 26, 33, 0.25);
+    font-family: sans-serif;
+}
+
+.card-github-component p {
+    margin: 0;
+}
+
+.card-github-component a {
+    color: #8800cc;
+    text-decoration: none;
+    transition: background-size 0.15s;
+    padding-bottom: 2px;
+    background-image: linear-gradient(
+        transparent calc(100% - 2px),
+        #8800cc 2px
+    );
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+}
+
+.card-github-component a:hover {
+    background-size: 100% 100%;
+    background-position: bottom left;
+}
+
+.card-github-component .title {
+    font-size: 24px;
+    margin-bottom: 1em;
+}
+
+.card-github-component .watchers {
+    color: #777582;
+}

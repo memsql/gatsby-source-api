@@ -1,0 +1,4 @@
+**/.cache/
+**/public
+**/plugins/*
+!**/plugins/*.md

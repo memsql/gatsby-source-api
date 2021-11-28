@@ -12,6 +12,7 @@
     "lint": "npx eslint src",
     "lint:fix": "npx eslint src --fix",
     "lint:types": "npx ttsc --noEmit",
+    "postbuild": "npx rimraf dist/index.js && ./scripts/examples.sh",
     "prepare": "npm run cross-env-build",
     "prepublish": "npm run lint && npm run test:ci && npm run cross-env-build",
     "publish": "npm publish --access public",
@@ -50,9 +51,10 @@
     "babel-plugin-module-resolver": "^4.1.0",
     "babel-preset-gatsby-package": "^2.2.0",
     "cross-env": "^7.0.3",
-    "eslint": "^8.2.0",
+    "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-babel": "^5.3.1",
+    "eslint-plugin-disable": "^2.0.3",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jest": "^25.2.4",
@@ -71,7 +73,7 @@
     "gatsby": "^3.0.0 || ^4.0.0"
   },
   "files": [
-      "dist/"
+    "dist/"
   ],
   "repository": {
     "type": "git",

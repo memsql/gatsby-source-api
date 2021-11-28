@@ -1,11 +1,7 @@
-const internalAbsoluteImportOrder = ["utils", "types"];
-
-const pipedInternalAbsoluteImports = internalAbsoluteImportOrder.join("|");
-const internalAbsoluteImportGroups = internalAbsoluteImportOrder.map(
-    dirName => [`^${dirName}(\\/.*|$)`]
-);
+const simpleImportSortOptions = require("./scripts/simple-import-sort");
 
 module.exports = {
+    root: true,
     parser: "@typescript-eslint/parser",
     env: {
         es6: true,
@@ -20,6 +16,7 @@ module.exports = {
     plugins: [
         "@typescript-eslint",
         "babel",
+        "disable",
         "eslint-comments",
         "import",
         "jest",
@@ -33,6 +30,7 @@ module.exports = {
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
     ],
+    processor: "disable/disable",
     parserOptions: {
         sourceType: "module",
         emcaVersion: 6,
@@ -43,9 +41,16 @@ module.exports = {
     },
     overrides: [
         {
+            files: ["*.ts", "*.tsx"],
+            parserOptions: {
+                tsconfigRootDir: __dirname,
+                project: ["./tsconfig.json", "./examples/*/tsconfig.json"],
+            },
+        },
+        {
             files: ["*.js"],
-            rules: {
-                "@typescript-eslint/no-var-requires": 0,
+            settings: {
+                "disable/plugins": ["@typescript-eslint"],
             },
         },
         {
@@ -86,31 +91,10 @@ module.exports = {
          */
         "simple-import-sort/imports": [
             2,
-            {
-                groups: [
-                    // Node.js builtins
-                    [`^(${require("module").builtinModules.join("|")})(/|$)`],
-                    // Packages `react` > proptypes > classnames > lodash > all the rest.
-                    [
-                        "^lodash",
-                        // https://regex101.com/r/lhyIM3/1
-                        `^@?(?!(${pipedInternalAbsoluteImports})$)[a-z0-9_-]+`,
-                    ],
-                    // Side effect imports
-                    ["^\\u0000"],
-                    // Internal side effect imports
-                    // https://regex101.com/r/oDACXy/1
-                    [
-                        `^\\u0000(${pipedInternalAbsoluteImports})(\\/(.(?!.*(\\.s?css)))*|$)`,
-                    ],
-                    // Internal packages
-                    ...internalAbsoluteImportGroups,
-                    // Parent imports. Put `..` last
-                    ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
-                    // Other relative imports. Put same-folder imports and `.` last
-                    ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
-                ],
-            },
+            simpleImportSortOptions({
+                sortOrder: ["utils", "types"],
+                initialModuleOrder: ["lodash"],
+            }),
         ],
     },
 };

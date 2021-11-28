@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "module": "ESNEXT",
+        "target": "ESNEXT",
+        "moduleResolution": "node",
+        "allowJs": true,
+        "baseUrl": "src",
+        "noEmit": true,
+        "jsx": "react",
+
+        "preserveConstEnums": true,
+        "noUnusedLocals": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "removeComments": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "strictBindCallApply": true,
+        "strictPropertyInitialization": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true
+    },
+    "include": ["src/**/*"]
+}

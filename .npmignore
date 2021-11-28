@@ -1,6 +1,7 @@
 .github
 coverage
 examples
+scripts
 src/**/*
 
 .babelrc.js
