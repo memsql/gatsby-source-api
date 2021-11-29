@@ -6,15 +6,15 @@ import Layout from "components/Layout";
 import PageMeta from "components/PageMeta";
 
 type BasicExampleProps = {
-    externalBasic: GithubRepoProps;
+    externalGithub: GithubRepoProps;
 };
 
 const BasicExample: React.VFC<PageProps<BasicExampleProps>> = ({
-    data: { externalBasic },
+    data: { externalGithub },
 }) => (
     <Layout>
         <PageMeta title="Basic" />
-        <CardGithub {...externalBasic} />
+        <CardGithub {...externalGithub} />
     </Layout>
 );
 
@@ -22,11 +22,11 @@ export default BasicExample;
 
 export const query = graphql`
     {
-        externalBasic {
+        externalGithub {
             name
             link: html_url
             description
-            numWatchers: watchers_count
+            stars: stargazers_count
         }
     }
 `;

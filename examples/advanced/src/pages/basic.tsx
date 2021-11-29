@@ -14,6 +14,8 @@ const BasicExample: React.VFC<PageProps<BasicExampleProps>> = ({
 }) => (
     <Layout>
         <PageMeta title="Basic" />
+        <h2>Single Request (basic)</h2>
+
         <CardGithub {...externalBasic} />
     </Layout>
 );
@@ -26,7 +28,7 @@ export const query = graphql`
             name
             link: html_url
             description
-            numWatchers: watchers_count
+            stars: stargazers_count
         }
     }
 `;

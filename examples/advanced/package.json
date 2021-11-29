@@ -1,24 +1,19 @@
 {
-  "name": "gatsby-source-api-example-advances",
-  "description": "An advanced example of how to use `gatsby-source-api` on a real Gatsby site",
-  "version": "1.0.0",
+  "name": "gatsby-source-api-example-advanced",
+  "description": "Gatsby based site containing multiple advanced confirguration sets for the gatsby-source-api plugin",
   "author": "SingleStore Web Team <web@singlestore.com>",
-  "license": "MIT",
   "scripts": {
     "clean": "npx gatsby clean",
     "build": "npm run build:plugin && npx gatsby build",
     "build:plugin": "cd ../../ && npm run build",
     "prepare": "npm run build:plugin",
-    "develop": "npm run build:plugin && npx gatsby develop",
+    "develop": "npm run build:plugin && npx gatsby develop --port 4000",
     "serve": "npx gatsby serve"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/memsql/gatsby-source-api",
     "directory": "examples/advanced"
-  },
-  "bugs": {
-    "url": "https://github.com/memsql/gatsby-source-api/issues"
   },
   "dependencies": {
     "gatsby": "^4.2.0",
@@ -32,6 +27,7 @@
     "@types/react-helmet": "^6.1.4",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
+    "dotenv": "^10.0.0",
     "eslint": "^8.3.0",
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-simple-import-sort": "^7.0.0",

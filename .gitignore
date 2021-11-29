@@ -4,6 +4,7 @@ coverage
 dist
 src/**/*.d.ts*
 
+.env
 yarn.lock
 .DS_Store
 .vscode

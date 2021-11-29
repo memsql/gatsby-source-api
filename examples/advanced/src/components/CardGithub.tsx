@@ -6,7 +6,7 @@ export type GithubRepoProps = {
     name: string;
     link: string;
     description: string;
-    numWatchers: number;
+    stars: number;
 };
 
 export type CardGithubProps = GithubRepoProps & {
@@ -17,7 +17,7 @@ const CardGithub: React.VFC<CardGithubProps> = ({
     name,
     link,
     description,
-    numWatchers,
+    stars,
 }) => (
     <div className="card-github-component">
         <a href={link} className="title">
@@ -26,7 +26,7 @@ const CardGithub: React.VFC<CardGithubProps> = ({
 
         {description && <p className="description">{description}</p>}
 
-        <p className="watchers">Watchers: {numWatchers}</p>
+        <p className="stars">Stars: {stars}</p>
     </div>
 );
 

@@ -1,3 +1,9 @@
+const path = require("path");
+
+require("dotenv").config({
+    path: path.resolve(__dirname, "../.env"),
+});
+
 module.exports = {
     siteMetadata: {
         title: "Gatsby Source API Example (basic)",
@@ -18,11 +24,19 @@ module.exports = {
         {
             resolve: "gatsby-source-api",
             options: {
-                name: "basic",
+                name: "github",
                 endpoint: new URL(
                     "/repos/microsoft/typescript",
                     "https://api.github.com/"
                 ),
+                fetchOptions: {
+                    headers: {
+                        Accept: "application/vnd.github.v3+json",
+                        authorization: process.env.GITHUB_TOKEN
+                            ? `token ${process.env.GITHUB_TOKEN}`
+                            : undefined,
+                    },
+                },
             },
         },
     ],

@@ -1,3 +1,5 @@
+const path = require("path");
+
 const _ = require("lodash");
 
 exports.onCreateWebpackConfig = gatsbyContext => {
@@ -5,11 +7,14 @@ exports.onCreateWebpackConfig = gatsbyContext => {
 
     const config = getConfig();
 
-    config.resolve.modules = _.uniq([
-        ...(config.resolve.fallback || {}),
-        path.resolve(__dirname, "src"),
-        "node_modules",
-    ]);
-
-    actions.setWebpackConfig(config);
+    actions.setWebpackConfig({
+        resolve: {
+            ...config.resolve,
+            modules: _.uniq([
+                ...(config.resolve.modules || []),
+                path.resolve(__dirname, "src"),
+                "node_modules",
+            ]),
+        },
+    });
 };

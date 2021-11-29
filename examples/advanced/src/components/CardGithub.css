@@ -37,6 +37,6 @@
     margin-bottom: 1em;
 }
 
-.card-github-component .watchers {
-    color: #777582;
+.card-github-component .stars {
+    color: #c3a418;
 }

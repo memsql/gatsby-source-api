@@ -9,6 +9,7 @@
     "build:types": "npx ttsc --emitDeclarationOnly",
     "clean": "npx rimraf dist",
     "cross-env-build": "cross-env NODE_ENV=production npm run clean && npm run build",
+    "examples-env": "cp examples/.default.env examples/.env",
     "lint": "npx eslint src",
     "lint:fix": "npx eslint src --fix",
     "lint:types": "npx ttsc --noEmit",

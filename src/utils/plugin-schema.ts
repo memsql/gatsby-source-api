@@ -57,11 +57,11 @@ export const pluginOptionsSchema = ({ Joi }: PluginOptionsSchemaArgs) => {
         serializeAll: Joi.function(),
         requests: Joi.array().items(
             Joi.object(requestSchemaShape)
-                .oxor("endpoint", "fetchOptions")
+                .oxor("endpoint", "fetchOptions.endoint")
                 .oxor("entryPoint", "serialize")
         ),
     })
-        .oxor("endpoint", "fetchOptions")
+        .oxor("endpoint", "fetchOptions.endpoint")
         .oxor("entryPoint", "serialize", "serializeAll")
         .oxor("requests", "getRequest", "getRequests");
 };
